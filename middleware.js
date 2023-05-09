@@ -8,21 +8,10 @@ import {
   verifyToken,
 } from './utils/authUtil';
 
-export const middleware = async (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader(
-    'Access-Control-Allow-Methods',
-    'GET,HEAD,PUT,PATCH,POST,DELETE',
-  );
-
+export const middleware = async (req) => {
   if (req.method === 'OPTIONS') {
-    res.end();
-    return false;
+    return cors(req, new NextResponse(null, { status: 200 }));
   }
-
-  // if (req.method === 'OPTIONS') {
-  //   return cors(req, new NextResponse(null, { status: 200 }));
-  // }
 
   if (!R.startsWith('/api/backend', req.nextUrl.pathname)) {
     // not protected apis; continue
